@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário de suporte Auvo</title>
+    <style>
+        body {
+            background-color: #ADD8E6;
+        }
+
+        .form-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .form-wrapper {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-wrapper hr {
+            width: 100%;
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #ADD8E6;
+        }
+
+        form {
+            font-family: 'Raleway', Arial, sans-serif;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-row label {
+            text-align: left;
+            padding-right: 10px;
+            width: 150px;
+        }
+
+        .form-row input,
+        .form-row textarea {
+            width: 300px;
+        }
+
+        iframe {
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="form-container">
+        <div class="form-wrapper">
+            <iframe src="https://drive.google.com/file/d/1QNeRmMTD79xs7_9NTJ1oBfCeBVsd7Mle/preview" width="100" height="100"></iframe>
+            <hr>
+            <form action="/pagina-processa-dados-do-form" method="post" enctype="multipart/form-data">
+                <div class="form-row">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required placeholder="Nome Sobrenome" />
+                </div>
+
+                <div class="form-row">
+                    <label for="email_solicitante">E-mail do solicitante:</label>
+                    <input type="email" id="email_solicitante" name="email_solicitante" required placeholder="email@exemplo.com" />
+                </div>
+
+                <div class="form-row">
+                    <label for="nome_cliente">Nome do cliente:</label>
+                    <input type="text" id="nome_cliente" name="nome_cliente" required placeholder="Nome Sobrenome" />
+                </div>
+
+                <div class="form-row">
+                    <label for="email_cliente">E-mail de contato do cliente:</label>
+                    <input type="email" id="email_cliente" name="email_cliente" required placeholder="email@exemplo.com" />
+                </div>
+
+                <div class="form-row">
+                    <label for="tel_cliente">Telefone do cliente:</label>
+                    <input type="tel" id="tel_cliente" name="tel_cliente" pattern="/([0-9]{2}/) [0-9]{4,5}-[0-9]{4}" required placeholder="(XX) XXXX-XXXX" />
+                </div>
+
+                <div class="form-row">
+                    <label for="nome_empresa">Nome da empresa:</label>
+                    <input type="text" id="nome_empresa" name="nome_empresa" required placeholder="Exemplo LTDA" />
+                </div>
+
+                <div class="form-row">
+                    <label for="customer_id">ID do Cliente</label>
+                    <input type="number" id="customer_id" name="customer_id" required placeholder="12345" />
+                </div>
+
+                <div class="form-row">
+                    <label for="reseller_id"></label>
+                    <input type="hidden" id="reseller_id" name="reseller_id" value="16">
+                </div>
+
+                <div class="form-row">
+                    <label for="problema_resumo">Descrição do problema:</label>
+                    <textarea name="problema_resumo" id="problema_resumo" cols="30" rows="10" required placeholder="Descreva em detalhes o problema enfrentado"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="anexo">Anexo:</label>
+                    <input type="file" id="anexo" name="anexo">
+                </div>
+
+                <div class="button">
+                    <button type="submit">Enviar chamado</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
