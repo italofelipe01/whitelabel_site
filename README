@@ -32,26 +32,26 @@ O **White Label Support Hub** é uma solução SaaS (Software as a Service) proj
 
 ### Passo a Passo
 
-1.  **Clone o repositório**
-    ```bash
-    git clone [https://github.com/italofelipe01/whitelabel_site.git](https://github.com/italofelipe01/whitelabel_site.git)
-    cd whitelabel_site
-    ```
+1. **Clone o repositório**
+```bash
+git clone https://github.com/italofelipe01/whitelabel_site.git
+cd whitelabel_site
+```
 
-2.  **Instale as dependências**
-    ```bash
-    pip install flask
-    ```
+2. **Instale as dependências**
+```bash
+pip install flask
+```
 
-3.  **Execute a aplicação**
-    ```bash
-    python meu_site.py
-    ```
+3. **Execute a aplicação**
+```bash
+python meu_site.py
+```
 
-4.  **Acesse no navegador**
-    * Landing Page: `http://localhost:5000/`
-    * Portal Auvo: `http://localhost:5000/auvo_15`
-    * Portal ChatsHub: `http://localhost:5000/chatshub_16`
+4. **Acesse no navegador**
+   * Landing Page: `http://localhost:5000/`
+   * Portal Auvo: `http://localhost:5000/auvo_15`
+   * Portal ChatsHub: `http://localhost:5000/chatshub_16`
 
 ## 📄 Licença
 
@@ -60,3 +60,5 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 ## 👨‍💻 Autor
 
 **Ítalo Felipe Lira de Morais**
+
+---
