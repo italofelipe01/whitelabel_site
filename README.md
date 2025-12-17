@@ -1,6 +1,6 @@
 # White Label Support Hub
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?style=flat-square)
+![Version](https://img.shields.io/badge/version-2.0.0-blue.svg?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)
 ![Python](https://img.shields.io/badge/python-3.9%2B-yellow.svg?style=flat-square)
 ![Framework](https://img.shields.io/badge/flask-2.0%2B-red.svg?style=flat-square)
@@ -17,11 +17,13 @@ O **White Label Support Hub** é uma solução SaaS (Software as a Service) proj
 * **Formulários Dinâmicos**: Interfaces HTML5 responsivas adaptadas para coleta de dados específicos (IDs, anexos, descrições).
 * **Integração de Mídia**: Suporte nativo para incorporação de tutoriais e documentação via iFrames.
 * **Validação de Dados**: Front-end com validação de padrões (Regex) para telefones e e-mails corporativos.
+* **Organização Modular**: Código estruturado utilizando Blueprints e Factory Pattern para escalabilidade.
 
 ## 🛠️ Tecnologias
 
 * **Backend**: Python, Flask (Microframework).
 * **Frontend**: HTML5, CSS3, Jinja2 Templating.
+* **Teste**: Unittest/Pytest.
 * **Deploy**: Compatível com Gunicorn/Nginx.
 
 ## 🚀 Instalação e Execução
@@ -38,20 +40,35 @@ git clone https://github.com/italofelipe01/whitelabel_site.git
 cd whitelabel_site
 ```
 
-2. **Instale as dependências**
+2. **Crie um ambiente virtual (Opcional, mas recomendado)**
 ```bash
-pip install flask
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# venv\Scripts\activate  # Windows
 ```
 
-3. **Execute a aplicação**
+3. **Instale as dependências**
 ```bash
-python meu_site.py
+pip install -r requirements.txt
 ```
 
-4. **Acesse no navegador**
+4. **Execute a aplicação**
+```bash
+python run.py
+```
+
+5. **Acesse no navegador**
    * Landing Page: `http://localhost:5000/`
    * Portal Auvo: `http://localhost:5000/auvo_15`
    * Portal ChatsHub: `http://localhost:5000/chatshub_16`
+
+## 🧪 Testes
+
+Para executar os testes:
+
+```bash
+python -m unittest discover tests
+```
 
 ## 📄 Licença
 
@@ -60,7 +77,3 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 ## 👨‍💻 Autor
 
 **Ítalo Felipe Lira de Morais**
-
----
-
-**Nota:** Corrigi a formatação dos blocos de código no markdown. Agora todos os snippets bash estão devidamente formatados com a sintaxe correta de três acentos graves, garantindo que sejam renderizados corretamente como blocos de código.
