@@ -1,4 +1,4 @@
-name: Release
+name: Action For Semantic Release
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
           persist-credentials: false
 
       - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v4
+        uses: cycjimmy/semantic-release-action@v6.0.0
         with:
           semantic_version: 19
           extra_plugins: |

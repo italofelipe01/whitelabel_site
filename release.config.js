@@ -1,5 +1,5 @@
 module.exports = {
-  "branches": ["master", "main"],
+  "branches": ["main"],
   "plugins": [
     "@semantic-release/commit-analyzer",      // Analisa os commits para decidir a versão (major/minor/patch)
     "@semantic-release/release-notes-generator", // Gera o texto do changelog
