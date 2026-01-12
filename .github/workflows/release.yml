@@ -1,11 +1,31 @@
-steps:
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Necessário para criar tags e releases
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4
         with:
+          semantic_version: 19
           extra_plugins: |
             @semantic-release/changelog
             @semantic-release/git
-            # O plugin @semantic-release/github já vem instalado por padrão, 
-            # não precisa listar aqui, mas precisa estar no release.config.js
+            @semantic-release/github
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # ESSENCIAL para criar a Release no GitHub
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
