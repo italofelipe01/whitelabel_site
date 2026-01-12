@@ -1,0 +1,45 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quality-check:
+    name: Code Quality & Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13' # Ajuste conforme a versão que você usa
+          cache: 'pip' # Cache automático para acelerar o processo
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Tenta instalar dependências do projeto e ferramentas de dev
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install flake8 black pytest
+
+      - name: Check Formatting (Black)
+        run: |
+          # Falha se o código não estiver formatado
+          black --check .
+
+      - name: Lint with Flake8
+        run: |
+          # Para o build se houver erros de sintaxe ou variáveis indefinidas
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # Apenas avisa sobre estilo, mas não quebra o build (exit-zero)
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+
+      - name: Run Tests (Pytest)
+        run: |
+          # Roda apenas se houver uma pasta de testes
+          if [ -d "tests" ] || [ -d "test" ]; then pytest; else echo "No tests found"; fi

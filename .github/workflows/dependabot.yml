@@ -1,0 +1,19 @@
+version: 2
+updates:
+  # Mantém as bibliotecas Python (pip) atualizadas
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "python"
+
+  # Mantém as Actions do GitHub (checkout, setup-python, etc) atualizadas
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+      - "github-actions"

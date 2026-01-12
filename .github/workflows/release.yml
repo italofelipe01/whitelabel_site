@@ -10,17 +10,17 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Necessário para criar tags e releases
+      contents: write # Necessário para criar tags, releases e commitar o changelog
       issues: write
       pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: false # Importante para o semantic-release usar o token correto
 
       - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v6.0.0
+        uses: cycjimmy/semantic-release-action@v4
         with:
           extra_plugins: |
             @semantic-release/changelog
