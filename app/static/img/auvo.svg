@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="80" viewBox="0 0 220 80" role="img" aria-labelledby="title">
+  <title id="title">Auvo</title>
+  <rect width="220" height="80" rx="16" fill="#ffffff"/>
+  <circle cx="42" cy="40" r="20" fill="#1d6fd3"/>
+  <path d="M31 43h22l-7-14h-8z" fill="#ffffff"/>
+  <text x="76" y="50" fill="#182230" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">Auvo</text>
+</svg>

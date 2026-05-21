@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}{{ tenant.headline }}{% endblock %}
+
+{% block body %}
+<main class="support-page" style="--tenant-accent: {{ tenant.accent_color }}">
+    <section class="support-shell">
+        <aside class="brand-panel">
+            <a class="back-link" href="{{ url_for('main.landing_page') }}">Voltar</a>
+
+            <div class="brand-header">
+                <div class="logo-frame">
+                    <img src="{{ url_for('static', filename=tenant.logo.src) }}" alt="{{ tenant.logo.alt }}" class="brand-logo">
+                </div>
+                <div>
+                    <p class="eyebrow">Portal whitelabel</p>
+                    <h1>{{ tenant.headline }}</h1>
+                </div>
+            </div>
+
+            <p class="brand-description">{{ tenant.description }}</p>
+
+            {% if tenant.media_url %}
+            <div class="media-box">
+                <iframe src="{{ tenant.media_url }}" title="Material de apoio {{ tenant.name }}" loading="lazy"
+                    allow="autoplay"></iframe>
+            </div>
+            {% endif %}
+        </aside>
+
+        <section class="form-panel" aria-label="{{ tenant.headline }}">
+            <form action="{{ url_for('main.submit_support_form', tenant_slug=tenant.slug) }}" method="post"
+                enctype="multipart/form-data">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+                <div class="form-grid">
+                    {% for field in tenant.fields %}
+                    <div class="field field-{{ field.type }}{% if field.type in ['textarea', 'file'] %} field-wide{% endif %}">
+                        <label for="{{ field.name }}">
+                            {{ field.label }}
+                            {% if field.required %}<span aria-hidden="true">*</span>{% endif %}
+                        </label>
+
+                        {% if field.type == "textarea" %}
+                        <textarea id="{{ field.name }}" name="{{ field.name }}" rows="{{ field.rows | default(5) }}"
+                            placeholder="{{ field.placeholder | default('') }}"
+                            {% if field.maxlength is defined %}maxlength="{{ field.maxlength }}"{% endif %}
+                            {% if field.required %}required{% endif %}>{{ form_values.get(field.name, '') }}</textarea>
+                        {% elif field.type == "select" %}
+                        <select id="{{ field.name }}" name="{{ field.name }}" {% if field.required %}required{% endif %}>
+                            <option value="">Selecione</option>
+                            {% for option in field.options %}
+                            <option value="{{ option.value }}" {% if form_values.get(field.name) == option.value %}selected{% endif %}>
+                                {{ option.label }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        {% elif field.type == "file" %}
+                        <input id="{{ field.name }}" name="{{ field.name }}" type="file" accept="{{ field.accept | default('') }}">
+                        {% else %}
+                        <input id="{{ field.name }}" name="{{ field.name }}" type="{{ field.type }}"
+                            value="{{ form_values.get(field.name, '') }}"
+                            placeholder="{{ field.placeholder | default('') }}"
+                            autocomplete="{{ field.autocomplete | default('off') }}"
+                            {% if field.pattern %}pattern="{{ field.pattern }}"{% endif %}
+                            {% if field.min is defined %}min="{{ field.min }}"{% endif %}
+                            {% if field.maxlength is defined %}maxlength="{{ field.maxlength }}"{% endif %}
+                            {% if field.required %}required{% endif %}>
+                        {% endif %}
+
+                        {% if field.hint %}
+                        <small class="hint">{{ field.hint }}</small>
+                        {% endif %}
+
+                        {% if errors.get(field.name) %}
+                        <strong class="field-error">{{ errors.get(field.name) }}</strong>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-actions">
+                    <p>Os dados serão vinculados ao revendedor {{ tenant.reseller_id }}.</p>
+                    <button type="submit">Enviar chamado</button>
+                </div>
+            </form>
+        </section>
+    </section>
+</main>
+{% endblock %}

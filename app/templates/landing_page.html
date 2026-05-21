@@ -1,14 +1,33 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Pagina de Início</title>
-</head>
+{% block title %}White Label Support Hub{% endblock %}
 
-<body>
-    <p>Projeto feito por: Ítalo Felipe Lira de Morais</p>
-    <p>Email de contato: italo_felipe01@hotmail.com</p>    
-</body>
+{% block body %}
+<main class="hub-page">
+    <section class="hub-hero">
+        <div>
+            <p class="eyebrow">Central de suporte</p>
+            <h1>Portais whitelabel prontos para abertura de chamados</h1>
+            <p class="hero-copy">
+                Escolha o portal do cliente para iniciar uma solicitação com os campos,
+                identidade visual e regras configuradas para cada operação.
+            </p>
+        </div>
+    </section>
 
-</html>
+    <section class="tenant-grid" aria-label="Portais disponíveis">
+        {% for tenant in tenants %}
+        <a class="tenant-card" href="{{ url_for('main.support_form', tenant_slug=tenant.slug) }}"
+            style="--tenant-accent: {{ tenant.accent_color }}">
+            <span class="tenant-logo-box">
+                <img src="{{ url_for('static', filename=tenant.logo.src) }}" alt="{{ tenant.logo.alt }}" class="tenant-logo">
+            </span>
+            <span>
+                <strong>{{ tenant.name }}</strong>
+                <small>{{ tenant.headline }}</small>
+            </span>
+        </a>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}

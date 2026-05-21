@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Chamado recebido{% endblock %}
+
+{% block body %}
+<main class="status-page" style="--tenant-accent: {{ tenant.accent_color }}">
+    <section class="status-panel">
+        <div class="logo-frame compact">
+            <img src="{{ url_for('static', filename=tenant.logo.src) }}" alt="{{ tenant.logo.alt }}" class="brand-logo">
+        </div>
+        <p class="eyebrow">Chamado recebido</p>
+        <h1>Solicitação enviada para {{ tenant.name }}</h1>
+        <p>
+            O protocolo interno é <strong>{{ ticket_id }}</strong>. Use esse identificador
+            para localizar o registro gerado pelo portal.
+        </p>
+        <div class="status-actions">
+            <a href="{{ url_for('main.support_form', tenant_slug=tenant.slug) }}">Abrir outro chamado</a>
+            <a href="{{ url_for('main.landing_page') }}">Voltar ao hub</a>
+        </div>
+    </section>
+</main>
+{% endblock %}
