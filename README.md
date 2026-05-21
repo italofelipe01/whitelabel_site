@@ -1,79 +1,111 @@
 # White Label Support Hub
 
-![Version](https://img.shields.io/badge/version-2.0.0-blue.svg?style=flat-square)
-![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)
-![Python](https://img.shields.io/badge/python-3.9%2B-yellow.svg?style=flat-square)
-![Framework](https://img.shields.io/badge/flask-2.0%2B-red.svg?style=flat-square)
+Plataforma Flask para criação de portais whitelabel de suporte. Cada rota pública
+representa um tenant com identidade visual, mídia de apoio, campos personalizados e
+regras de validação próprias.
 
-> Uma plataforma web modular desenvolvida em Flask para gerenciamento de formulários de suporte técnico personalizados (White Label) para múltiplos clientes corporativos.
+## Funcionalidades
 
-## 🎯 Visão Geral
+- Hub inicial com os portais disponíveis.
+- Rotas whitelabel configuráveis, como `/auvo_15` e `/chatshub_16`.
+- Formulário único renderizado a partir da configuração do tenant.
+- Campos dinâmicos: texto, e-mail, telefone, número, seleção, área de texto e anexo.
+- Processamento de submissão em `/<tenant>/suporte`.
+- Registro local dos chamados em `instance/tickets/tickets.jsonl`.
+- Upload seguro com nomes sanitizados, limite de tamanho e extensões permitidas.
+- Logos isolados em molduras responsivas para preservar a estética da página.
+- Testes cobrindo rotas, campos customizados, validação e criação de chamado.
 
-O **White Label Support Hub** é uma solução SaaS (Software as a Service) projetada para centralizar a entrada de chamados de suporte de diferentes empresas em uma única infraestrutura. O sistema permite a renderização dinâmica de interfaces personalizadas baseadas na identidade visual e requisitos de cada cliente (ex: Auvo, ChatsHub), mantendo um *backend* unificado.
+## Estrutura Principal
 
-### ✨ Funcionalidades Principais
-
-* **Arquitetura Multi-Tenant**: Suporte a múltiplas rotas personalizadas (`/auvo_15`, `/chatshub_16`) na mesma instância.
-* **Formulários Dinâmicos**: Interfaces HTML5 responsivas adaptadas para coleta de dados específicos (IDs, anexos, descrições).
-* **Integração de Mídia**: Suporte nativo para incorporação de tutoriais e documentação via iFrames.
-* **Validação de Dados**: Front-end com validação de padrões (Regex) para telefones e e-mails corporativos.
-* **Organização Modular**: Código estruturado utilizando Blueprints e Factory Pattern para escalabilidade.
-
-## 🛠️ Tecnologias
-
-* **Backend**: Python, Flask (Microframework).
-* **Frontend**: HTML5, CSS3, Jinja2 Templating.
-* **Teste**: Unittest/Pytest.
-* **Deploy**: Compatível com Gunicorn/Nginx.
-
-## 🚀 Instalação e Execução
-
-### Pré-requisitos
-* Python 3.x
-* Pip
-
-### Passo a Passo
-
-1. **Clone o repositório**
-```bash
-git clone https://github.com/italofelipe01/whitelabel_site.git
-cd whitelabel_site
+```text
+app/
+  routes.py              # Rotas do hub, formulário, submissão e sucesso
+  tenants.py             # Catálogo de clientes e campos por tenant
+  tickets.py             # Validação, upload e persistência local do chamado
+  templates/
+    base.html
+    landing_page.html
+    support_form.html
+    success.html
+    error.html
+  static/
+    css/style.css
+    img/
+      auvo.svg
+      chatshub.svg
 ```
 
-2. **Crie um ambiente virtual (Opcional, mas recomendado)**
+## Como Adicionar um Cliente
+
+Inclua uma entrada em `app/tenants.py`:
+
+```python
+"cliente_99": {
+    "slug": "cliente_99",
+    "name": "Cliente",
+    "reseller_id": "99",
+    "headline": "Solicitar suporte Cliente",
+    "description": "Texto exibido no painel lateral.",
+    "accent_color": "#1d6fd3",
+    "logo": {"src": "img/cliente.svg", "alt": "Cliente"},
+    "media_url": "https://drive.google.com/file/d/.../preview",
+    "fields": COMMON_SUPPORT_FIELDS + [
+        {
+            "name": "campo_extra",
+            "label": "Campo extra",
+            "type": "text",
+            "required": False,
+        }
+    ],
+}
+```
+
+Adicione o arquivo de logo em `app/static/img/`. O layout limita largura, altura e
+usa `object-fit: contain`, então imagens horizontais ou quadradas não devem
+quebrar o formulário.
+
+## Execução Local
+
 ```bash
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# venv\Scripts\activate  # Windows
-```
-
-3. **Instale as dependências**
-```bash
+venv\Scripts\activate
 pip install -r requirements.txt
-```
-
-4. **Execute a aplicação**
-```bash
 python run.py
 ```
 
-5. **Acesse no navegador**
-   * Landing Page: `http://localhost:5000/`
-   * Portal Auvo: `http://localhost:5000/auvo_15`
-   * Portal ChatsHub: `http://localhost:5000/chatshub_16`
+Acesse:
 
-## 🧪 Testes
+- `http://localhost:5000/`
+- `http://localhost:5000/auvo_15`
+- `http://localhost:5000/chatshub_16`
 
-Para executar os testes:
+## Configuração
+
+Variáveis úteis:
+
+- `FLASK_CONFIG`: `development`, `testing` ou `production`.
+- `SECRET_KEY`: obrigatória em produção.
+- `MAX_CONTENT_LENGTH`: limite máximo de upload em bytes. Padrão: 8 MB.
+
+Em produção, execute com Gunicorn ou outro servidor WSGI:
 
 ```bash
-python -m unittest discover tests
+FLASK_CONFIG=production SECRET_KEY=sua-chave gunicorn run:app
 ```
 
-## 📄 Licença
+## Testes e Qualidade
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+```bash
+python -m pytest
+python -m black --check .
+python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+```
 
-## 👨‍💻 Autor
+## Próximos Passos Recomendados
 
-**Ítalo Felipe Lira de Morais**
+- Trocar persistência local por banco de dados.
+- Enviar chamados para uma API, webhook, e-mail ou ferramenta de help desk.
+- Adicionar autenticação administrativa para listar/exportar chamados.
+- Adicionar captcha ou rate limit caso o formulário fique público na internet.
+- Guardar anexos em storage externo com política de retenção.
